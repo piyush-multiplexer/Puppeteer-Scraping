@@ -1,0 +1,19 @@
+{
+  "name": "puppeteer-scraping",
+  "version": "1.0.0",
+  "description": "Node Web Scraping with Puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piyush-multiplexer/Puppeteer-Scraping.git"
+  },
+  "author": "Piyush Goyani <thesourcepedia@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/piyush-multiplexer/Puppeteer-Scraping/issues"
+  },
+  "homepage": "https://github.com/piyush-multiplexer/Puppeteer-Scraping#readme"
+}
