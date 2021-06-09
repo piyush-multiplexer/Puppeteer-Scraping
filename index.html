@@ -9,10 +9,30 @@
 <button onclick="getNewsHeadlines()">Today's Headline</button>
 <button onclick="renderURL()">Render This</button>
 <button onclick="searchAndCrawl()">Search and Crawl</button>
+<div id="search-result"></div>
 </body>
 <script type="text/javascript">
-function getNewsHeadlines(){}
-function renderURL(){}
-function searchAndCrawl(){}
+    function getNewsHeadlines() {
+    }
+
+    function renderURL() {
+    }
+
+    function searchAndCrawl() {
+        fetch('http://localhost:3000/search-crawl?search=test').then(response => response.json())
+            .then(data => {
+                let elem = document.getElementById('search-result');
+                data.forEach(function (element) {
+                    let url = document.createElement('div');
+                    let name = document.createElement('div');
+
+                    url.innerHTML = element.url;
+                    name.innerHTML = element.name;
+
+                    elem.appendChild(url);
+                    elem.appendChild(name);
+                });
+            });
+    }
 </script>
 </html>
