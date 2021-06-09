@@ -1,31 +1,33 @@
-const {Cluster} = require('puppeteer-cluster');
+const ClusterManager = require("./ClusterManager");
 const express = require('express');
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 8080;
-
-
-app.listen(port);
-console.log('Server started at http://localhost:' + port);
+const port = process.env.PORT || 3000;
 
 (async () => {
-    const cluster = await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_BROWSER,
-        maxConcurrency: 4,
-    });
+    let ClusterObj = new ClusterManager()
+    await ClusterObj.launchCluster()
 
     app.get('/', function (req, res) {
         res.sendFile(path.join(__dirname, '/index.html'));
     });
+
     app.get('/news', function (req, res) {
         res.send('News')
     })
+
     app.get('/redirect-render', function (req, res) {
         res.send('Render')
     })
-    app.get('/search-crawl', function (req, res) {
-        res.send('Search')
+
+    app.get('/search-crawl', async function (req, res) {
+        let result = await ClusterObj.addClusterTask('google-search-crawler', {
+            searchTerm: req.query.search,
+            offset: 10
+        });
+        await ClusterObj.closeCluster()
+        res.send(result)
     })
     app.get('/', async function (req, res) { // expects URL to be given by ?url=...
         try {
@@ -37,6 +39,6 @@ console.log('Server started at http://localhost:' + port);
     });
 
     app.listen(port, function () {
-        console.log('Server listening on port 3000.');
+        console.log('Server started at http://localhost:' + port);
     });
 })();
