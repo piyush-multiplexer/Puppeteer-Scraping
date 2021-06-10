@@ -1,5 +1,5 @@
 module.exports = {
-    async createTask(cluster) {
+    async task_searchAndCrawl(cluster) {
         return await cluster.task(async ({page, data}) => {
             const {searchTerm, offset} = data;
             await page.goto(

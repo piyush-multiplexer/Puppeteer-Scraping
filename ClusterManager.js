@@ -1,6 +1,6 @@
 const {Cluster} = require('puppeteer-cluster');
 const puppeteer = require('puppeteer-core');
-const {createTask} = require('./google-search-crawler')
+const {task_searchAndCrawl} = require('./google-search-crawler')
 module.exports = class ClusterManager {
     constructor() {
         this.cluster = null
@@ -13,7 +13,7 @@ module.exports = class ClusterManager {
             puppeteerOptions: {executablePath: '/usr/bin/google-chrome-stable'},
             maxConcurrency: 3,
         });
-        await createTask(this.cluster)
+        await task_searchAndCrawl(this.cluster)
     }
 
     async addClusterTask(taskName, taskObj) {
