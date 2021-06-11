@@ -1,6 +1,8 @@
 const {Cluster} = require('puppeteer-cluster');
 const puppeteer = require('puppeteer-core');
 const {task_searchAndCrawl} = require('./google-search-crawler')
+const {task_getTodaysHeadlines} = require('./google-news-headlines')
+
 module.exports = class ClusterManager {
     constructor() {
         this.cluster = null
@@ -14,11 +16,15 @@ module.exports = class ClusterManager {
             maxConcurrency: 3,
         });
         await task_searchAndCrawl(this.cluster)
+        await task_getTodaysHeadlines(this.cluster)
     }
 
     async addClusterTask(taskName, taskObj) {
         if (taskName === 'google-search-crawler') {
             return await this.cluster.execute(taskObj)
+        }
+        else if(taskName === 'news'){
+            return await this.cluster.execute()
         }
         return []
     }

@@ -13,8 +13,10 @@ const port = process.env.PORT || 3000;
         res.sendFile(path.join(__dirname, '/index.html'));
     });
 
-    app.get('/news', function (req, res) {
-        res.send('News')
+    app.get('/news', async function (req, res) {
+        let result = await ClusterObj.addClusterTask('news')
+        await ClusterObj.closeCluster()
+        res.send(result)
     })
 
     app.get('/redirect-render', function (req, res) {
