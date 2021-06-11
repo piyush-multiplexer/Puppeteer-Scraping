@@ -19,8 +19,10 @@ const port = process.env.PORT || 3000;
         res.send(result)
     })
 
-    app.get('/redirect-render', function (req, res) {
-        res.send('Render')
+    app.get('/url-render', async function (req, res) {
+        let result = await ClusterObj.addClusterTask('url-renderer', {url: req.query.url})
+        await ClusterObj.closeCluster()
+        res.send(result)
     })
 
     app.get('/search-crawl', async function (req, res) {
