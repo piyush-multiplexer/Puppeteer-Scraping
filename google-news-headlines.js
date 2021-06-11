@@ -1,7 +1,6 @@
 module.exports = {
     async task_getTodaysHeadlines(cluster) {
         return await cluster.task(async ({page}) => {
-            // const {searchTerm, offset} = data;
             await page.goto('https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRFZxYUdjU0FtVnVHZ0pKVGlnQVAB?hl=en-IN&gl=IN&ceid=IN%3Aen', {waitUntil: 'domcontentloaded'})
             await page.waitForSelector('c-wiz.MNK4Vd')
             return (await page.evaluate(() => {
