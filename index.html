@@ -76,6 +76,7 @@
     function getNewsHeadlines() {
         fetch('http://localhost:3000/news').then(response => response.json())
             .then(data => {
+                clearResult();
                 let elem = document.getElementById('search-result');
                 data.articles.forEach(function (element) {
                     let div = document.createElement('div');
@@ -91,6 +92,7 @@
     }
 
     function renderURL() {
+        clearResult();
         let url = document.getElementById('generalInput').value;
         window.open(`http://localhost:3000/url-render?url=${url}`, '_blank').focus();
     }
@@ -98,7 +100,7 @@
     function searchAndCrawl() {
         fetch(`http://localhost:3000/search-crawl?search=${document.getElementById('generalInput').value}`).then(response => response.json())
             .then(data => {
-                console.log(data)
+                clearResult();
                 let elem = document.getElementById('search-result');
                 data.forEach(function (element) {
                     let div = document.createElement('div');
@@ -111,6 +113,10 @@
                     elem.appendChild(div);
                 });
             });
+    }
+
+    function clearResult() {
+        document.getElementById('search-result').innerHTML = '';
     }
 </script>
 </html>
