@@ -17,17 +17,17 @@ module.exports = class ClusterManager {
             maxConcurrency: 3,
             args: ['--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']
         });
-        await task_searchAndCrawl(this.cluster)
-        await task_getTodaysHeadlines(this.cluster)
-        await task_urlRenderer(this.cluster)
     }
 
     async addClusterTask(taskName, taskObj) {
         if (taskName === 'google-search-crawler') {
+            await task_searchAndCrawl(this.cluster)
             return await this.cluster.execute(taskObj)
         } else if (taskName === 'news') {
+            await task_getTodaysHeadlines(this.cluster)
             return await this.cluster.execute()
         } else if (taskName === 'url-renderer') {
+            await task_urlRenderer(this.cluster)
             return await this.cluster.execute(taskObj)
         }
         return []
