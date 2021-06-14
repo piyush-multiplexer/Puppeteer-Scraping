@@ -67,33 +67,31 @@
         <button onclick="renderURL()">Render This</button>
         <button onclick="searchAndCrawl()">Search and Crawl</button>
     </div>
-    <div class="row"></div>
+    <div class="row">
+        <div id="search-result"></div>
+    </div>
 </div>
-
-<div id="search-result"></div>
 </body>
 <script type="text/javascript">
     function getNewsHeadlines() {
         fetch('http://localhost:3000/news').then(response => response.json())
             .then(data => {
                 let elem = document.getElementById('search-result');
-                console.log(data)
-                data.forEach(function (element) {
-                    let url = document.createElement('div');
-                    let name = document.createElement('div');
+                data.articles.forEach(function (element) {
+                    let div = document.createElement('div');
+                    let aTag = document.createElement('a');
 
-                    url.innerHTML = element.url;
-                    name.innerHTML = element.name;
+                    aTag.href = element.href;
+                    aTag.innerText = element.title;
+                    div.innerHTML = aTag.outerHTML;
 
-                    elem.appendChild(url);
-                    elem.appendChild(name);
+                    elem.appendChild(div);
                 });
             });
     }
 
     function renderURL() {
         let url = document.getElementById('generalInput').value;
-        console.log(url)
         window.open(`http://localhost:3000/url-render?url=${url}`, '_blank').focus();
     }
 
@@ -103,14 +101,14 @@
                 console.log(data)
                 let elem = document.getElementById('search-result');
                 data.forEach(function (element) {
-                    let url = document.createElement('div');
-                    let name = document.createElement('div');
+                    let div = document.createElement('div');
+                    let aTag = document.createElement('a');
 
-                    url.innerHTML = element.url;
-                    name.innerHTML = element.name;
+                    aTag.href = element.url
+                    aTag.innerText = element.name;
+                    div.innerHTML = aTag.outerHTML;
 
-                    elem.appendChild(url);
-                    elem.appendChild(name);
+                    elem.appendChild(div);
                 });
             });
     }
