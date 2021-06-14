@@ -1,8 +1,10 @@
 const ClusterManager = require("./ClusterManager");
 const express = require('express');
+let cors = require('cors')
 const path = require('path');
 
-const app = express();
+const app = express()
+app.use(cors())
 const port = process.env.PORT || 3000;
 
 (async () => {
