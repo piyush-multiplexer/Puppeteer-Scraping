@@ -34,6 +34,12 @@
             background-color: #45a049;
         }
 
+        button:disabled, button[disabled] {
+            border: 1px solid #999999;
+            background-color: #cccccc;
+            color: #666666;
+        }
+
         .container {
             border-radius: 5px;
             background-color: #f2f2f2;
@@ -63,17 +69,18 @@
         <em>Add URL with protocol and domain.</em>
     </div>
     <div class="row mt-5">
-        <button onclick="getNewsHeadlines()">Today's Headline</button>
-        <button onclick="renderURL()">Render This</button>
-        <button onclick="searchAndCrawl()">Search and Crawl</button>
+        <button id="btn1" onclick="getNewsHeadlines()">Today's Headline</button>
+        <button id="btn2" onclick="renderURL()">Render This</button>
+        <button id="btn3" onclick="searchAndCrawl()">Search and Crawl</button>
     </div>
-    <div class="row">
+    <div class="row mt-5">
         <div id="search-result"></div>
     </div>
 </div>
 </body>
 <script type="text/javascript">
     function getNewsHeadlines() {
+        toggleBtnStates()
         fetch('http://localhost:3000/news').then(response => response.json())
             .then(data => {
                 clearResult();
@@ -81,13 +88,12 @@
                 data.articles.forEach(function (element) {
                     let div = document.createElement('div');
                     let aTag = document.createElement('a');
-
                     aTag.href = element.href;
                     aTag.innerText = element.title;
                     div.innerHTML = aTag.outerHTML;
-
                     elem.appendChild(div);
                 });
+                toggleBtnStates()
             });
     }
 
@@ -95,9 +101,11 @@
         clearResult();
         let url = document.getElementById('generalInput').value;
         window.open(`http://localhost:3000/url-render?url=${url}`, '_blank').focus();
+        toggleBtnStates()
     }
 
     function searchAndCrawl() {
+        toggleBtnStates()
         fetch(`http://localhost:3000/search-crawl?search=${document.getElementById('generalInput').value}`).then(response => response.json())
             .then(data => {
                 clearResult();
@@ -105,18 +113,25 @@
                 data.forEach(function (element) {
                     let div = document.createElement('div');
                     let aTag = document.createElement('a');
-
                     aTag.href = element.url
                     aTag.innerText = element.name;
                     div.innerHTML = aTag.outerHTML;
-
                     elem.appendChild(div);
                 });
+                toggleBtnStates()
             });
     }
 
     function clearResult() {
         document.getElementById('search-result').innerHTML = '';
+    }
+
+    function toggleBtnStates() {
+        let buttons = document.getElementsByTagName('button')
+        console.log(buttons)
+        for (let btn of buttons) {
+            btn.disabled = !btn.disabled;
+        }
     }
 </script>
 </html>
