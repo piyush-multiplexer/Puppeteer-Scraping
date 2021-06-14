@@ -35,14 +35,6 @@ const port = process.env.PORT || 3000;
         await ClusterObj.closeCluster()
         res.send(result)
     })
-    app.get('/', async function (req, res) { // expects URL to be given by ?url=...
-        try {
-            const resp = await cluster.execute(req.query.url);
-            res.status(200).send(resp);
-        } catch (err) {
-            res.end('Error: ' + err.message);
-        }
-    });
 
     app.listen(port, function () {
         console.log('Server started at http://localhost:' + port);
