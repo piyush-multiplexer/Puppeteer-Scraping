@@ -3,24 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <title>Web Scraping using Puppeteer and Express</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .mt-5 {
+            margin-top: 25px;
+        }
+    </style>
 </head>
 <body>
-<h1>Web Scraping using Puppeteer and Express</h1>
-<button onclick="getNewsHeadlines()">Today's Headline</button>
-<button onclick="renderURL()">Render This</button>
-<button onclick="searchAndCrawl()">Search and Crawl</button>
+<div class="container">
+    <div class="row">
+        <h1>Web Scraping using Puppeteer and Express</h1>
+    </div>
+    <div class="row">
+        <label for="generalInput">Text Input (Search Term/URL)</label>
+        <input type="text" id="generalInput" autofocus placeholder="Input"/>
+        <br/>
+        <em>Add URL with protocol and domain.</em>
+    </div>
+    <div class="row mt-5">
+        <button onclick="getNewsHeadlines()">Today's Headline</button>
+        <button onclick="renderURL()">Render This</button>
+        <button onclick="searchAndCrawl()">Search and Crawl</button>
+    </div>
+    <div class="row"></div>
+</div>
+
 <div id="search-result"></div>
 </body>
 <script type="text/javascript">
     function getNewsHeadlines() {
+        fetch('http://localhost:3000/news').then(response => response.json())
+            .then(data => {
+                let elem = document.getElementById('search-result');
+                console.log(data)
+                data.forEach(function (element) {
+                    let url = document.createElement('div');
+                    let name = document.createElement('div');
+
+                    url.innerHTML = element.url;
+                    name.innerHTML = element.name;
+
+                    elem.appendChild(url);
+                    elem.appendChild(name);
+                });
+            });
     }
 
     function renderURL() {
+        let url = document.getElementById('generalInput').value;
+        console.log(url)
+        window.open(`http://localhost:3000/url-render?url=${url}`, '_blank').focus();
     }
 
     function searchAndCrawl() {
-        fetch('http://localhost:3000/search-crawl?search=test').then(response => response.json())
+        fetch(`http://localhost:3000/search-crawl?search=${document.getElementById('generalInput').value}`).then(response => response.json())
             .then(data => {
+                console.log(data)
                 let elem = document.getElementById('search-result');
                 data.forEach(function (element) {
                     let url = document.createElement('div');
