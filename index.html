@@ -99,6 +99,7 @@
 
     function renderURL() {
         clearResult();
+        toggleBtnStates()
         let url = document.getElementById('generalInput').value;
         window.open(`http://localhost:3000/url-render?url=${url}`, '_blank').focus();
         toggleBtnStates()
