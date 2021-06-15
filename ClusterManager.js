@@ -15,7 +15,7 @@ module.exports = class ClusterManager {
             concurrency: Cluster.CONCURRENCY_CONTEXT, puppeteer,
             // puppeteerOptions: {executablePath: '/usr/bin/google-chrome-stable'},
             maxConcurrency: 3,
-            args: ['--no-sandbox', '--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']
+            args: ['--no-sandbox']
         });
     }
 
