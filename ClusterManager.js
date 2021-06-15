@@ -13,9 +13,12 @@ module.exports = class ClusterManager {
     async launchCluster() {
         this.cluster = await Cluster.launch({
             concurrency: Cluster.CONCURRENCY_CONTEXT, puppeteer,
+            puppeteerOptions: {
+                headless: true,
+                args: ['--no-sandbox', '--disable-setuid-sandbox']
+            },
             // puppeteerOptions: {executablePath: '/usr/bin/google-chrome-stable'},
-            maxConcurrency: 3,
-            args: ['--no-sandbox']
+            maxConcurrency: 1,
         });
     }
 
