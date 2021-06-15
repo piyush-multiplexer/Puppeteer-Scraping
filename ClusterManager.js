@@ -1,5 +1,5 @@
 const {Cluster} = require('puppeteer-cluster');
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer');//require('puppeteer-core');
 const {task_searchAndCrawl} = require('./google-search-crawler')
 const {task_getTodaysHeadlines} = require('./google-news-headlines')
 const {task_urlRenderer} = require('./url-renderer')
@@ -13,9 +13,9 @@ module.exports = class ClusterManager {
     async launchCluster() {
         this.cluster = await Cluster.launch({
             concurrency: Cluster.CONCURRENCY_CONTEXT, puppeteer,
-            puppeteerOptions: {executablePath: '/usr/bin/google-chrome-stable'},
+            // puppeteerOptions: {executablePath: '/usr/bin/google-chrome-stable'},
             maxConcurrency: 3,
-            args: ['--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']
+            args: ['--no-sandbox', '--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']
         });
     }
 
