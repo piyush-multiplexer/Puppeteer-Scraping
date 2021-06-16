@@ -81,7 +81,7 @@
 <script type="text/javascript">
     function getNewsHeadlines() {
         toggleBtnStates()
-        fetch('http://localhost:3000/news').then(response => response.json())
+        fetch('https://puppeteer-scrapping.herokuapp.com/news').then(response => response.json())
             .then(data => {
                 clearResult();
                 let elem = document.getElementById('search-result');
@@ -101,13 +101,13 @@
         clearResult();
         toggleBtnStates()
         let url = document.getElementById('generalInput').value;
-        window.open(`http://localhost:3000/url-render?url=${url}`, '_blank').focus();
+        window.open(`https://puppeteer-scrapping.herokuapp.com/url-render?url=${url}`, '_blank').focus();
         toggleBtnStates()
     }
 
     function searchAndCrawl() {
         toggleBtnStates()
-        fetch(`http://localhost:3000/search-crawl?search=${document.getElementById('generalInput').value}`).then(response => response.json())
+        fetch(`https://puppeteer-scrapping.herokuapp.com/search-crawl?search=${document.getElementById('generalInput').value}`).then(response => response.json())
             .then(data => {
                 clearResult();
                 let elem = document.getElementById('search-result');
